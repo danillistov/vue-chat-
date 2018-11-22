@@ -1,6 +1,7 @@
 <template>
   <v-container fluid fill-height>
-    <v-layout >
+    <Chat v-if="leave"></Chat>
+    <v-layout v-else>
       <v-flex xs12 sm2 md2>
         <v-card class="mr-2" >
           <v-list>
@@ -71,12 +72,29 @@
           </v-list>
         </v-card>
       </v-flex>
+       <v-flex xs16 sm10 md2>
+        <v-card class="ml-2" >
+          <v-list subheader>
+            <v-list-tile
+           v-model="this.$parent.username"
+              :data="this.$parent.username"
+            >
+              <v-list-tile-content>
+                <v-list-tile-title>
+                  <v-icon :data-username="this.$parent.username" @click="leaveChat">exit_to_app</v-icon>
+                </v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+        </v-card>
+      </v-flex>
     </v-layout>
 </v-container>
 </template>
 <script>
 /* eslint-disable */
 import ChatMessage from './ChatMessage.vue'
+
 //import colors from 'vuetify/es5/util/colors'
 
 export default {
@@ -86,6 +104,7 @@ export default {
     return {
       newMessage: '',
       messages: [],
+      leave: false,
       rooms: [{
         id: '1a',
         messages: [],
@@ -116,7 +135,8 @@ export default {
       }        
       ],
       tr: 1,
-      onlineUsers: []
+      onlineUsers: [],
+      username: ''
     }
   },
 
@@ -191,6 +211,13 @@ export default {
       //let roomToEnter = event.target.getAttribute('data-room');
       //if(roomToEnter==null) roomToEnter = event.target.parent.getAttribute('data-room') 
       // Tell the server to kick them from the chat
+    },
+    leaveChat(event) {
+      event.preventDefault();
+       let leaveUser = event.target.getAttribute('data-username');
+      
+       this.$parent.socket.emit('leave user', leaveUser);
+       this.leave = true
     }
 
   },

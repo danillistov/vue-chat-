@@ -5,7 +5,9 @@ import store from './store'
 import './registerServiceWorker'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import Chat from './components/Chat.vue'
 
+Vue.component('Chat', Chat)
 Vue.use(Vuetify, { iconfont: 'mdi',
   theme: {
     primary: '#ee44aa',
