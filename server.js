@@ -3,7 +3,20 @@ var http = require('http')
 var app = express()
 var server = http.createServer(app)
 var io = require('socket.io').listen(server)
+var mongoose = require('mongoose')
 
+var duri = 'mongodb://localhost/vuepaw3'
+mongoose.connect(duri)
+mongoose.connection.on('connected', function () {
+  console.log('Mongoose connected to ' + duri)
+})
+mongoose.connection.on('error', function (err) {
+  console.log('Mongoose connection error:' + err)
+})
+
+mongoose.connection.on('disconnected', function () {
+  console.log('Mongoose disconnected')
+})
 /**
  * Set up a basic Express server.
  */

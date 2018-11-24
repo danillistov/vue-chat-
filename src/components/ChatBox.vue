@@ -79,7 +79,7 @@
            v-model="this.$parent.username"
               :data="this.$parent.username"
             >
-              <v-list-tile-content>
+              <v-list-tile-content>Покинуть чат
                 <v-list-tile-title>
                   <v-icon :data-username="this.$parent.username" @click="leaveChat">exit_to_app</v-icon>
                 </v-list-tile-title>
